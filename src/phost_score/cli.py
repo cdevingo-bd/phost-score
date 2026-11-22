@@ -83,7 +83,7 @@ def _reverify(ledger: Ledger, args) -> int:
     entry = Entry.from_dict(record.entry)
 
     def run(graph, scene, config):
-        return run_isolated(GraphSpec.from_dict(dict(graph)), scene, RunConfig(**{**config, "worlds": tuple(config["worlds"])}),
+        return run_isolated(GraphSpec.from_dict(dict(graph)), scene, RunConfig.from_recorded(config),
                             scene_dirs=args.scene_dir)
 
     outcome = reverify(entry, run)

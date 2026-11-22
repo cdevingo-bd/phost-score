@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from phost_score import JUDGED, SELF_REPORTED, Entry, Ledger, leaderboard, make_entries
+from phost_score import JUDGED, SELF_REPORTED, Entry, Ledger, leaderboard, make_entries, wins
 from phost_score.entry import graph_hash, json_safe
 
 from conftest import STAGE, make_cell, make_result
@@ -192,3 +192,37 @@ def test_judged_and_self_reported_runs_are_both_shown_with_their_trust(ledger):
 def test_the_board_is_json_ready(ledger):
     run(ledger, "a", classes={STAGE: "approximate"}, cells=[make_cell(accuracy_ratio=2.0)])
     json.dumps(leaderboard(ledger.records()))
+
+
+# ---- wins: what beat the host's own step ------------------------------------------------------------------------------------------
+
+def record_all(ledger, result, label="x"):
+    for entry in make_entries(result, label=label, trust=SELF_REPORTED):
+        ledger.append(entry.to_dict())
+
+
+def test_a_win_is_faster_than_the_hosts_own_step_at_every_world_count_it_was_measured_at(ledger):
+    record_all(ledger, make_result(cells=[make_cell(worlds=1, speedup=1.4), make_cell(worlds=8, speedup=1.2)], impl="a/win"), "wins")
+    record_all(ledger, make_result(cells=[make_cell(worlds=1, speedup=2.5), make_cell(worlds=8, speedup=0.8)], impl="a/mixed"), "mixed")
+    record_all(ledger, make_result(cells=[make_cell(worlds=8, speedup=0.9)], impl="a/slow"), "slow")
+    (win,) = wins(ledger.records())
+    assert win["label"] == "wins" and win["speedups"] == {1: 1.4, 8: 1.2} and win["lowest"] == 1.2 and win["klass"] == "exact"
+    assert win["graph"]["stages"][STAGE]["impl"] == "a/win" and win["seq"] == 2 and win["trust"] == SELF_REPORTED
+
+
+def test_wins_leave_out_what_cannot_be_trusted_or_changes_the_answer_and_are_filtered_by_scene(ledger):
+    record_all(ledger, make_result(cells=[make_cell(worlds=8, speedup=3.0, native_spread=0.9)], impl="a/noisy"), "noisy")
+    record_all(ledger, make_result(classes={STAGE: "model_changing"}, cells=[make_cell(worlds=8, speedup=3.0)], impl="a/physics"), "physics")
+    record_all(ledger, make_result(cells=[make_cell(worlds=8, speedup=1.5)], impl="a/here", scene="s1:a"), "here")
+    record_all(ledger, make_result(cells=[make_cell(worlds=8, speedup=1.5)], impl="a/there", scene="s2:b"), "there")
+    assert {w["label"] for w in wins(ledger.records())} == {"here", "there"}                   # not the noisy one, not the physics change
+    assert [w["label"] for w in wins(ledger.records(), scene="s2:b")] == ["there"]
+    assert wins(ledger.records(), min_speedup=2.0) == []
+
+
+def test_only_the_latest_run_of_a_graph_counts_so_a_later_loss_removes_the_win(ledger):
+    record_all(ledger, make_result(cells=[make_cell(worlds=8, speedup=1.6)], impl="a/same"), "me")
+    assert len(wins(ledger.records())) == 1
+    record_all(ledger, make_result(cells=[make_cell(worlds=8, speedup=0.7)], impl="a/same"), "me")
+    assert wins(ledger.records()) == []
+    json.dumps(wins(ledger.records()))

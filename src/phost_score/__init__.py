@@ -1,6 +1,6 @@
 """Scoring for phost: judgement rules by swap class, Pareto ranking, and a tamper-evident local ledger."""
 
-from .board import leaderboard
+from .board import leaderboard, wins
 from .entry import JUDGED, SELF_REPORTED, Entry, make_entries
 from .ledger import Head, Ledger, LedgerError, Record, Verification
 from .pareto import Objective, dominates, ranks
@@ -10,7 +10,7 @@ from .rules import (APPROXIMATE, CONTROL, EXACT, MODEL_CHANGING, OBJECTIVES, OBS
                     judge_cell)
 
 __version__ = "0.1.0.dev0"
-__all__ = ["leaderboard", "Entry", "make_entries", "SELF_REPORTED", "JUDGED", "Ledger", "LedgerError", "Record",
+__all__ = ["leaderboard", "wins", "Entry", "make_entries", "SELF_REPORTED", "JUDGED", "Ledger", "LedgerError", "Record",
            "Head", "Verification", "Objective", "dominates", "ranks", "default_ledger", "state_dir", "reverify",
            "Reverification", "Tolerances", "Rules", "Judgement", "judge_cell", "graph_class", "OBJECTIVES", "EXACT",
            "APPROXIMATE", "MODEL_CHANGING", "OBSERVER", "CONTROL"]

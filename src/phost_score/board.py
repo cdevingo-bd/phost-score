@@ -75,6 +75,36 @@ def leaderboard(records: Iterable[Record], *, scene: str | None = None, device: 
     return out
 
 
+def wins(records: Iterable[Record], *, scene: str | None = None, device: str | None = None,
+         min_speedup: float = 1.0) -> list[dict[str, Any]]:
+    """The entries that beat the host's own step, strongest first. JSON-ready.
+
+    A win keeps the answer (a model-changing entry is a different simulation, so its step time says nothing), passed its checks,
+    has a timing that can be trusted, and is faster than ``min_speedup`` at every world count the same graph was measured at:
+    one that wins at one world count and loses at another is not a win. As on the leaderboard, only the latest run of a graph
+    under a label counts at each world count. ``speedups`` is by world count and ``lowest`` is the smallest of them, which is
+    what the list is ordered on; ``seq`` is the newest record behind it and ``graph`` is the recorded graph, to run it again."""
+    latest: dict[tuple, dict[int, tuple[Record, Entry]]] = {}
+    for record in records:
+        entry = Entry.from_dict(record.entry)
+        if entry.klass == MODEL_CHANGING or not _matches(entry, scene, device, None, None, None, None):
+            continue
+        key = (entry.scene, entry.device, entry.graph_hash, entry.label, entry.trust, entry.klass)
+        latest.setdefault(key, {})[entry.worlds] = (record, entry)             # later records replace earlier ones
+    out = []
+    for (scene_, device_, graph_hash, label, trust, klass), cells in latest.items():
+        speeds = {worlds: entry.objectives.get("speedup") for worlds, (_, entry) in cells.items()}
+        if not all(e.eligible and e.reliable and speeds[w] is not None and speeds[w] > min_speedup for w, (_, e) in cells.items()):
+            continue
+        newest = max((r for r, _ in cells.values()), key=lambda r: r.seq)
+        entry = Entry.from_dict(newest.entry)
+        out.append(dict(scene=scene_, device=device_, label=label, trust=trust, klass=klass, graph_hash=graph_hash,
+                        speedups=dict(sorted(speeds.items())), lowest=min(speeds.values()), seq=newest.seq, time=entry.time,
+                        graph=entry.graph, notes=list(entry.notes)))
+    out.sort(key=lambda w: (-w["lowest"], w["seq"]))
+    return out
+
+
 def _matches(entry: Entry, scene, device, worlds, klass, trust, label) -> bool:
     return ((scene is None or entry.scene == scene) and (device is None or entry.device == device)
             and (worlds is None or entry.worlds == worlds) and (klass is None or entry.klass == klass)
