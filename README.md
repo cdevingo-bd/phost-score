@@ -1,8 +1,8 @@
 # phost-score
 
-Scoring for [phost](../phost) runs: how a result is judged, how results are ranked, and a local ledger that records
+Scoring for [phost](https://github.com/cdevingo-bd/phost) runs: how a result is judged, how results are ranked, and a local ledger that records
 them so the record is hard to alter by accident. It works on the JSON that
-[phost-lab](../phost-lab) produces and needs no GPU itself.
+[phost-lab](https://github.com/cdevingo-bd/phost-lab) produces and needs no GPU itself.
 
 ```
 phost-lab run examples/coupled.json --scene trampoline12:impact --worlds 8 --out result.json
