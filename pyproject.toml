@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "phost-score"
 version = "0.1.0.dev0"
-description = "Scoring for phost: judgement rules by swap class, Pareto ranking, and a tamper-evident local ledger"
+description = "Judging rules by swap class, a Pareto board and a hash-chained local ledger for phost run results. No GPU needed."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
