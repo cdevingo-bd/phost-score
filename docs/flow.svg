@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">phost-score: gate by swap class, rank like with like, keep a chain of records</title>
+<desc id="dsc">A phost-lab result becomes one entry per world count. Each entry is gated by the swap class of what was swapped (exact and approximate: the lab's checks; model changing: the stage's own reference law; observer: leaving the trajectory alone). An entry that fails is recorded with its reasons and never ranked; one whose timing is unreliable is left off the board. Entries are appended to a hash-chained ledger. The board groups entries measured on the same scene, device and world count and ranks them by the class's objectives: speedup, a speed and accuracy Pareto front, step time, or overhead.</desc>
+<style>
+  :root { --bg:#ffffff; --ink:#1b1b1a; --ink2:#4a4945; --muted:#66645f; --line:#8c8a84; --rule:#d6d5cf;
+          --host:#efeeea; --accent:#1f5fbf; --accentfill:#e8f0fb; --onaccent:#ffffff; --warn:#8a4b00; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161615; --ink:#ecebe7; --ink2:#c2c1ba; --muted:#8f8d86; --line:#77756f; --rule:#34332f;
+            --host:#242422; --accent:#6ea2f0; --accentfill:#1b2a40; --onaccent:#0d1726; --warn:#e0a458; }
+  }
+  text { font-family: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 12px; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; }
+  .title { font-size: 16px; font-weight: 700; }
+  .head { font-size: 13px; font-weight: 700; }
+  .sub { fill: var(--ink2); }
+  .small { font-size: 11px; fill: var(--ink2); }
+  .tag { font-size: 10.5px; fill: var(--muted); }
+  .bold { font-weight: 700; }
+  .acc { fill: var(--accent); }
+  .mut { fill: var(--muted); }
+  .warn { fill: var(--warn); }
+  .box { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
+  .hostbox { fill: var(--host); stroke: var(--line); stroke-width: 1; }
+  .corebox { fill: var(--accentfill); stroke: var(--accent); stroke-width: 1; }
+  .ownbox { fill: var(--bg); stroke: var(--accent); stroke-width: 1.4; }
+  .yours { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 4 3; }
+  .frame { fill: none; stroke: var(--rule); stroke-width: 1; }
+  .rule { stroke: var(--rule); stroke-width: 1; fill: none; }
+  .ln { stroke: var(--line); stroke-width: 1; fill: none; }
+  .arrow { stroke: var(--ink2); stroke-width: 1.2; fill: none; marker-end: url(#h); }
+  .aarrow { stroke: var(--accent); stroke-width: 1.2; fill: none; marker-end: url(#ha); }
+  .back { stroke: var(--muted); stroke-width: 1; fill: none; stroke-dasharray: 3 3; marker-end: url(#h); }
+  .badge { fill: var(--accent); }
+  .badgetx { fill: var(--onaccent); font-size: 10.5px; font-weight: 700; text-anchor: middle; }
+</style>
+<defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" style="fill:var(--ink2)"/></marker><marker id="ha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" style="fill:var(--accent)"/></marker></defs>
+<rect x="0" y="0" width="1000" height="700" style="fill:var(--bg)"/>
+<text x="24" y="28" class="title" text-anchor="start">phost-score: gate by swap class, rank like with like, keep a chain of records</text>
+<text x="976" y="28" class="tag mono" text-anchor="end">needs no GPU and no simulator: it reads the lab's JSON</text>
+<rect x="24" y="50" width="16" height="16" rx="2" class="badge"/>
+<text x="32" y="62" class="badgetx">1</text>
+<text x="48" y="62" class="head" text-anchor="start">Judge</text>
+<text x="95.0" y="62" class="sub" text-anchor="start">what was swapped decides the rules</text>
+<rect x="24" y="76" width="200" height="62" rx="3" class="box"/>
+<text x="33" y="94" class="bold mono" text-anchor="start">lab result</text>
+<text x="33" y="111" class="small" text-anchor="start">JSON: a cell per world count,</text>
+<text x="33" y="125" class="small" text-anchor="start">stage classes, device, noise</text>
+<rect x="254" y="76" width="200" height="62" rx="3" class="corebox"/>
+<text x="263" y="94" class="bold mono" text-anchor="start">one entry per cell</text>
+<text x="263" y="111" class="small" text-anchor="start">scene, device, worlds, graph,</text>
+<text x="263" y="125" class="small" text-anchor="start">class, objectives, reasons</text>
+<path d="M226,107 L252,107" class="arrow"/>
+<path d="M456,107 L482,107" class="aarrow"/>
+<rect x="484" y="76" width="492" height="150" rx="3" class="corebox"/>
+<text x="494" y="94" class="bold small" text-anchor="start">gate: the strictest class in the graph</text>
+<text x="494" y="114" class="tag mono" text-anchor="start">class</text>
+<text x="604" y="114" class="tag mono" text-anchor="start">gate</text>
+<text x="738" y="114" class="tag mono" text-anchor="start">ranked on</text>
+<text x="494" y="132" class="small mono" text-anchor="start">exact</text>
+<text x="604" y="132" class="small" text-anchor="start">the lab's checks</text>
+<text x="738" y="132" class="small" text-anchor="start">speedup</text>
+<text x="494" y="152" class="small mono" text-anchor="start">approximate</text>
+<text x="604" y="152" class="small" text-anchor="start">the same checks</text>
+<text x="738" y="152" class="small" text-anchor="start">speed and accuracy (Pareto)</text>
+<text x="494" y="172" class="small mono" text-anchor="start">model changing</text>
+<text x="604" y="172" class="small" text-anchor="start">the stage's own law</text>
+<text x="738" y="172" class="small" text-anchor="start">step time, same stages</text>
+<text x="494" y="192" class="small mono" text-anchor="start">observer</text>
+<text x="604" y="192" class="small" text-anchor="start">trajectory left alone</text>
+<text x="738" y="192" class="small" text-anchor="start">overhead</text>
+<text x="494" y="214" class="tag" text-anchor="start">no stage at all is the control: never ranked</text>
+<text x="24" y="166" class="small" text-anchor="start">A failed gate is recorded with its reasons</text>
+<text x="24" y="180" class="small" text-anchor="start">and never ranked, however fast it was.</text>
+<text x="24" y="194" class="small" text-anchor="start">Timing is unreliable when the two native runs</text>
+<text x="24" y="208" class="small" text-anchor="start">differ by more than 10%, or another process</text>
+<text x="24" y="222" class="small" text-anchor="start">used the device: such entries stay off the</text>
+<text x="24" y="236" class="small" text-anchor="start">board unless asked for.</text>
+<rect x="24" y="250" width="16" height="16" rx="2" class="badge"/>
+<text x="32" y="262" class="badgetx">2</text>
+<text x="48" y="262" class="head" text-anchor="start">Record</text>
+<text x="102.0" y="262" class="sub" text-anchor="start">an append-only, hash-chained ledger in $PHOST_HOME</text>
+<rect x="24" y="278" width="206" height="76" rx="3" class="box"/>
+<text x="33" y="296" class="bold mono" text-anchor="start">#1</text>
+<text x="33" y="316" class="small mono" text-anchor="start">entry</text>
+<text x="33" y="330" class="small mono" text-anchor="start">prev: (start)</text>
+<text x="33" y="344" class="tag mono" text-anchor="start">trust: self-reported | judged</text>
+<path d="M232,316 L260,316" class="aarrow"/>
+<rect x="262" y="278" width="206" height="76" rx="3" class="box"/>
+<text x="271" y="296" class="bold mono" text-anchor="start">#2</text>
+<text x="271" y="316" class="small mono" text-anchor="start">entry</text>
+<text x="271" y="330" class="small mono" text-anchor="start">prev: hash of #1</text>
+<text x="271" y="344" class="tag mono" text-anchor="start">trust: self-reported | judged</text>
+<path d="M470,316 L498,316" class="aarrow"/>
+<rect x="500" y="278" width="206" height="76" rx="3" class="box"/>
+<text x="509" y="296" class="bold mono" text-anchor="start">#3</text>
+<text x="509" y="316" class="small mono" text-anchor="start">entry</text>
+<text x="509" y="330" class="small mono" text-anchor="start">prev: hash of #2</text>
+<text x="509" y="344" class="tag mono" text-anchor="start">trust: self-reported | judged</text>
+<path d="M708,316 L736,316" class="aarrow"/>
+<rect x="738" y="278" width="206" height="76" rx="3" class="box"/>
+<text x="747" y="296" class="bold mono" text-anchor="start">#4</text>
+<text x="747" y="316" class="small mono" text-anchor="start">entry</text>
+<text x="747" y="330" class="small mono" text-anchor="start">prev: hash of #3</text>
+<text x="747" y="344" class="tag mono" text-anchor="start">trust: self-reported | judged</text>
+<text x="24" y="376" class="small" text-anchor="start">Editing an entry, or removing or reordering records in the middle, breaks the chain; `phost-score check` says where.</text>
+<text x="24" y="392" class="small" text-anchor="start">It does not stop someone who can rewrite the whole file, and dropping the newest records leaves a valid chain: keep the head elsewhere (--head).</text>
+<rect x="24" y="420" width="16" height="16" rx="2" class="badge"/>
+<text x="32" y="432" class="badgetx">3</text>
+<text x="48" y="432" class="head" text-anchor="start">Rank</text>
+<text x="88.0" y="432" class="sub" text-anchor="start">only like is compared with like</text>
+<rect x="24" y="448" width="300" height="92" rx="3" class="box"/>
+<text x="33" y="466" class="bold mono" text-anchor="start">a group</text>
+<text x="33" y="483" class="small" text-anchor="start">the same scene, device and world</text>
+<text x="33" y="497" class="small" text-anchor="start">count (and, for a model-changing</text>
+<text x="33" y="511" class="small" text-anchor="start">swap, the same stages)</text>
+<rect x="354" y="448" width="300" height="92" rx="3" class="box"/>
+<text x="363" y="466" class="bold mono" text-anchor="start">within a group</text>
+<text x="363" y="483" class="small" text-anchor="start">the latest run of a label and graph</text>
+<text x="363" y="497" class="small" text-anchor="start">only, because the best of several</text>
+<text x="363" y="511" class="small" text-anchor="start">runs rewards noise</text>
+<rect x="684" y="448" width="292" height="92" rx="3" class="ownbox"/>
+<text x="693" y="466" class="bold mono" text-anchor="start">the board</text>
+<text x="693" y="483" class="small" text-anchor="start">ordered by the class's objectives;</text>
+<text x="693" y="497" class="small" text-anchor="start">front marks trade-offs; each row</text>
+<text x="693" y="511" class="small" text-anchor="start">shows its trust level</text>
+<path d="M326,494 L352,494" class="arrow"/>
+<path d="M656,494 L682,494" class="aarrow"/>
+<rect x="24" y="568" width="16" height="16" rx="2" class="badge"/>
+<text x="32" y="580" class="badgetx">4</text>
+<text x="48" y="580" class="head" text-anchor="start">Re-run</text>
+<text x="102.0" y="580" class="sub" text-anchor="start">a row can be checked again, here</text>
+<rect x="24" y="596" width="460" height="62" rx="3" class="box"/>
+<text x="33" y="614" class="bold mono" text-anchor="start">reverify(entry, run)</text>
+<text x="33" y="631" class="small" text-anchor="start">run is any function that runs a graph and returns a lab result,</text>
+<text x="33" y="645" class="small" text-anchor="start">so the scorer never imports the lab</text>
+<rect x="516" y="596" width="460" height="62" rx="3" class="box"/>
+<text x="525" y="614" class="bold mono" text-anchor="start">the comparison</text>
+<text x="525" y="631" class="small" text-anchor="start">a fresh result from a different device is "cannot say",</text>
+<text x="525" y="645" class="small" text-anchor="start">not a disagreement</text>
+<path d="M486,627 L514,627" class="arrow"/>
+</svg>
